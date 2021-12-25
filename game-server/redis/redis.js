@@ -1,33 +1,43 @@
+const logger = require("pomelo-logger").getLogger("pomelo", __filename)
 const redisConfig = require("../config/redis")
-var redis = require('redis');
-const { inspect } = require("util");
+const redis = require("redis")
+const { inspect } = require("util")
 
-(async () => {
-  const client = redis.createClient({
-    host: redisConfig.host,
-    port: redisConfig.port,
-    database: redisConfig.db,
-  });
+const client = redis.createClient({
+  host: redisConfig.host,
+  port: redisConfig.port,
+  database: redisConfig.db,
+})
 
-  client.on('error', (err) => console.error('Redis Client Error', inspect(err)));
-
-  await client.connect();
-
-  //await client.set('key', 'value');
-  //const value = await client.get('key');
-})();
+client.on("error", (err) => logger.error("Redis Client Error", inspect(err)))
+;(async () => {
+  await client.connect()
+})()
 
 /**
  * 用 key 取得值的內容
- * @param {*} key 
- * @returns 
+ * @param {*} key
+ * @returns
  */
- async function getValue(key) {
-  var value = await client.get(key, redis.print)
-  console.warn(value);
-  return value
+async function getValue(key) {
+  if (await client.exists(key)) {
+    return await client.get(key)
+  } else {
+    return null
+  }
+}
+
+/**
+ * 用 key 寫入值的內容
+ * @param {*} key
+ * @param {*} value
+ * @returns
+ */
+async function setValue(key, value) {
+  return await client.set(key, value)
 }
 
 module.exports = {
   getValue,
+  setValue,
 }

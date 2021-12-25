@@ -24,3 +24,11 @@ sh ./npm-install.sh
 npm install redis
 ```
 參考: [Node-Redis](https://www.npmjs.com/package/redis)
+
+如果 log4js 一直出現 `Error: ENOENT: no such file or directory`
+請試著建立第一個無法開啟的空檔案，其他檔案會自動建立，錯誤訊息也會消失
+
+安裝 sqlite
+```shell=
+npm install sqlite3
+```

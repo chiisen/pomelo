@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
+        "appenders",
+        "ENOENT",
         "hybridconnector",
-        "Protobuf"
+        "Protobuf",
+        "rowid"
     ]
 }

@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "redis": "^4.0.1"
+    "log4js": "^6.3.0",
+    "redis": "^4.0.1",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^3.2.5"
   }
 }

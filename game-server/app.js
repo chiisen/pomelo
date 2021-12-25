@@ -1,10 +1,24 @@
-const pomelo = require("pomelo");
-const redis = require("./redis/redis");
+const pomelo = require("pomelo")
+const logger = require("pomelo-logger").getLogger("pomelo", __filename)
+const redis = require("./redis/redis")
+const sqlite = require("./sqlite/sqlite")
 
-(async () => {
-  const value = await redis.getValue("FUNKY_GAME_CODE")
-  console.warn("getValue() : " + value)
-})();
+;(async () => {
+  let runCount = await redis.getValue("RunCount")
+  if (!runCount) {
+    runCount = 1
+    await redis.setValue("RunCount", runCount)
+  } else {
+    const parsed = parseInt(runCount)
+    if (isNaN(runCount)) {
+      runCount = 1
+    } else {
+      runCount = parsed
+    }
+  }
+  logger.info(`第${runCount}次程式執行!!!`)
+  await redis.setValue("RunCount", ++runCount)
+})()
 
 /**
  * Init app for client.
