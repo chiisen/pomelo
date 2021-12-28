@@ -2,6 +2,9 @@ const pomelo = require("pomelo")
 const logger = require("pomelo-logger").getLogger("pomelo", __filename)
 const redis = require("./redis/redis")
 const sqlite = require("./sqlite/sqlite")
+const short = require("short-uuid")
+
+const uuid = short.generate()
 
 ;(async () => {
   let runCount = await redis.getValue("RunCount")
@@ -16,7 +19,7 @@ const sqlite = require("./sqlite/sqlite")
       runCount = parsed
     }
   }
-  logger.info(`第${runCount}次程式執行!!!`)
+  logger.info(uuid + ` 第${runCount}次程式執行!!!`)
   await redis.setValue("RunCount", ++runCount)
 })()
 

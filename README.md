@@ -32,3 +32,8 @@ npm install redis
 ```shell=
 npm install sqlite3
 ```
+
+安裝 short-uuid
+```shell=
+npm install short-uuid
+```

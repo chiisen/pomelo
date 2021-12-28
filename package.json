@@ -2,6 +2,7 @@
   "dependencies": {
     "log4js": "^6.3.0",
     "redis": "^4.0.1",
+    "short-uuid": "^4.2.0",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {

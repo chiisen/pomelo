@@ -2,6 +2,9 @@ const logger = require("pomelo-logger").getLogger("pomelo", __filename)
 const redisConfig = require("../config/redis")
 const redis = require("redis")
 const { inspect } = require("util")
+const short = require("short-uuid")
+
+const uuid = short.generate()
 
 const client = redis.createClient({
   host: redisConfig.host,
@@ -9,7 +12,7 @@ const client = redis.createClient({
   database: redisConfig.db,
 })
 
-client.on("error", (err) => logger.error("Redis Client Error", inspect(err)))
+client.on("error", (err) => logger.error(uuid + " Redis Client Error", inspect(err)))
 ;(async () => {
   await client.connect()
 })()
