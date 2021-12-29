@@ -4,6 +4,13 @@ const redis = require("redis")
 const { inspect } = require("util")
 const short = require("short-uuid")
 
+module.exports = {
+  getValue,
+  setValue,
+  SetMap,
+  SetArray,
+}
+
 const uuid = short.generate()
 
 const client = redis.createClient({
@@ -40,7 +47,21 @@ async function setValue(key, value) {
   return await client.set(key, value)
 }
 
-module.exports = {
-  getValue,
-  setValue,
+async function SetMap(key, value) {
+  if (!(value instanceof Map)) {
+    logger.error("value is not Map")
+    return
+  }
+  const obj = Object.fromEntries(value)
+  const mppToString = JSON.stringify(obj)
+  return await client.set(key, mppToString)
+}
+
+async function SetArray(key, value) {
+  if (!(value instanceof Array)) {
+    logger.error("value is not Array")
+    return
+  }
+  const arrayToString = JSON.stringify(Object.assign({}, value))
+  return await client.set(key, arrayToString)
 }

@@ -21,6 +21,16 @@ const uuid = short.generate()
   }
   logger.info(uuid + ` 第${runCount}次程式執行!!!`)
   await redis.setValue("RunCount", ++runCount)
+
+  const array = ["Ford", "BMW", "Fiat"]
+  await redis.SetArray(`array:${runCount}`, array)
+
+  const map = new Map([
+    ["name", "Apple"],
+    ["place", "California"],
+    ["age", 25],
+  ])
+  await redis.SetMap(`Map:${runCount}`, map)
 })()
 
 /**
