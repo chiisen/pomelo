@@ -23,7 +23,7 @@ const uuid = short.generate()
   await redis.setValue("RunCount", ++runCount)
 
   const array = ["Ford", "BMW", "Fiat"]
-  await redis.SetArray(`array:${runCount}`, array)
+  await redis.SetArray(`Array:${runCount}`, array)
 
   const map = new Map([
     ["name", "Apple"],
